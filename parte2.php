@@ -1,24 +1,37 @@
-<?php 
+<?php
 // Inicia sessões 
-session_start(); 
- 
+session_start();
+
 // Verifica se existe os dados da sessão de login 
-if(!isset($_SESSION["login"]) || !isset($_SESSION["senha"])) { 
-// Usuário não logado! Redireciona para a página de login 
-header("Location: parte1.php"); 
-exit; 
+if (!isset($_SESSION["login"]) || !isset($_SESSION["senha"])) {
+    // Usuário não logado! Redireciona para a página de login 
+    header("Location: parte1.php");
+    exit;
 }
 $timeOut = 5;
- 
-if(isset($_SESSION['last_action'])){
+
+if (isset($_SESSION['last_action'])) {
     $secondsInativo = time() - $_SESSION['last_action'];
     $timeOutSeconds = $timeOut * 60;
-    if($secondsInativo >= $timeOutSeconds){
+    if ($secondsInativo >= $timeOutSeconds) {
         session_unset();
         session_destroy();
         header("Location: parte1.php");
-    }   
-} 
+    }
+}
+
+$shop = array(
+    array("tipo" => "Vinho", "Interrese" => "Sim", "Ano" => "2018 - 2017", "Valor" => "R$170 - R$220"),
+    array("tipo" => "Espumantte", "Interrese" => "Não", "Ano" => "2017 - 2015", "Valor" => "R$195+")
+    
+);
+
+$vinhos = array(
+    array("Vinho","Sim", "2018 - 2017", "R$170 - R$220")
+    //array("Espumantte", "Não", "2017 - 2015", "R$195+")
+);
+
+$batata = "Batata";
 ?>
 
 <!DOCTYPE html>
@@ -83,57 +96,59 @@ if(isset($_SESSION['last_action'])){
             </div>
 
             <div class="container2">
-                <h2>Informe suas preferências</h2><br />
-                <h6>*</h6>
-                <h5>Bebida escolhida</h5>
-                <div class="select">
-                    <select name="sl-1" id="sl-1">
-                        <option>Vinho</option>
-                        <option>Espumante</option>
-                    </select>
-                </div>
-                <h6>*</h6>
-                <h5>Ano</h5>
-                <div class="select">
-                    <select name="sl-2" id="sl-2">
-                        <option>2019</option>
-                        <option>2018</option>
-                        <option>2017</option>
-                        <option>2016</option>
-                        <option>2015</option>
-                        <option>2014</option>
-                    </select>
-                </div>
-                <h6>*</h6>
-                <h5>Quanto estou disposto a pagar</h5>
-                <div class="select">
-                    <select name="sl-3" id="sl-3">
-                        <option>R$170 - R$220</option>
-                        <option>R$100 - R$170</option>
-                        <option>R$0 - R$50</option>
-                        <option>R$50 - R$100</option>
-                        <option>R$220+</option>
-                    </select>
-                </div>
-                <h6>*</h6>
-                <h5>Tenho interesse por acessórios</h5>
-                <div class="radio-group">
-                    <label class="radio">
-                        <input type="radio" value="sim" name="choice">
-                        Sim
-                        <span></span>
-                    </label>
-                    <label class="radio">
-                        <input type="radio" value="nao" name="choice">
-                        Não
-                        <span></span>
-                    </label>
-                </div>
+                <form name="formCadastro" method="POST" action="buscarsalvarlista.php">
+                    <h2>Informe suas preferências</h2><br />
+                    <h6>*</h6>
+                    <h5>Bebida escolhida</h5>
+                    <div class="select">
+                        <select name="sl-1" id="sl-1">
+                            <option>Vinho</option>
+                            <option>Espumante</option>
+                        </select>
+                    </div>
+                    <h6>*</h6>
+                    <h5>Ano</h5>
+                    <div class="select">
+                        <select name="sl-2" id="sl-2">
+                            <option>2019</option>
+                            <option>2018</option>
+                            <option>2017</option>
+                            <option>2016</option>
+                            <option>2015</option>
+                            <option>2014</option>
+                        </select>
+                    </div>
+                    <h6>*</h6>
+                    <h5>Quanto estou disposto a pagar</h5>
+                    <div class="select">
+                        <select name="sl-3" id="sl-3">
+                            <option>R$170 - R$220</option>
+                            <option>R$100 - R$170</option>
+                            <option>R$0 - R$50</option>
+                            <option>R$50 - R$100</option>
+                            <option>R$220+</option>
+                        </select>
+                    </div>
+                    <h6>*</h6>
+                    <h5>Tenho interesse por acessórios</h5>
+                    <div class="radio-group">
+                        <label class="radio">
+                            <input type="radio" value="sim" name="choice">
+                            Sim
+                            <span></span>
+                        </label>
+                        <label class="radio">
+                            <input type="radio" value="nao" name="choice">
+                            Não
+                            <span></span>
+                        </label>
+                    </div>
 
-                <div class="buttons">
-                    <button type="button">Limpar</button>
-                    <button type="button">Cadastrar</button>
-                </div>
+                    <div class="buttons">
+                        <button type="button">Limpar</button>
+                        <button type="button">Cadastrar</button>
+                    </div>
+                </form>
             </div>
 
             <div class="container3">
@@ -149,18 +164,15 @@ if(isset($_SESSION['last_action'])){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Vinho</td>
-                            <td>Sim</td>
-                            <td class="numerico">2018 - 2017</td>
-                            <td class="numerico">R$170 - R$220</td>
-                        </tr>
-                        <tr>
-                            <td>Espumante</td>
-                            <td>Não</td>
-                            <td class="numerico">2017 - 2015</td>
-                            <td class="numerico">R$195+</td>
-                        </tr>
+                        <? foreach ($$_COOKIE["listaTabela"] as $row) : ?>
+                            <tr>
+                                <td><? echo $row["tipo"]; ?></td>
+                                <td><? echo $row[0]; ?></td>
+                                <td><? echo $row[1]; ?></td>
+                                <td><? echo $row[2]; ?></td>
+                                <td><? echo $row[3]; ?></td>
+                            </tr>
+                        <? endforeach; ?>
                     </tbody>
                 </table>
                 <div class="pagination">
