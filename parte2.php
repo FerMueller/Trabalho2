@@ -23,13 +23,21 @@ if (isset($_SESSION['last_action'])) {
 $shop = array(
     array("tipo" => "Vinho", "Interrese" => "Sim", "Ano" => "2018 - 2017", "Valor" => "R$170 - R$220"),
     array("tipo" => "Espumantte", "Interrese" => "Não", "Ano" => "2017 - 2015", "Valor" => "R$195+")
-    
+
 );
 
 $vinhos = array(
-    array("Vinho","Sim", "2018 - 2017", "R$170 - R$220")
+    array("Vinho", "Sim", "2018 - 2017", "R$170 - R$220")
     //array("Espumantte", "Não", "2017 - 2015", "R$195+")
 );
+
+$array1 = array("tipo" => "Vinho", "Interrese" => "Sim", "Ano" => "2018 - 2017", "Valor" => "R$170 - R$220");
+$array2 = array("tipo" => "Espumantte", "Interrese" => "Não", "Ano" => "2017 - 2015", "Valor" => "R$195+");
+$tabela = [$array1, $array2];
+//$tabela = array_push($array1);
+//$tabela = array_push($array2);
+
+//setcookie("listaTabela", $tabela);
 
 $batata = "Batata";
 ?>
@@ -86,7 +94,6 @@ $batata = "Batata";
         </div>
         </ul>
 
-        <container>
             <div class="container">
                 <h2>Uma breve pesquisa</h2><br />
                 <a>A WineClub é um eComercial focado na venda de vinhos e espumantes de ótima qualidade. </a> <br />
@@ -96,7 +103,7 @@ $batata = "Batata";
             </div>
 
             <div class="container2">
-                <form name="formCadastro" method="POST" action="buscarsalvarlista.php">
+                <form name="formCadastro" method="Post" action="buscarsalvarlista.php">
                     <h2>Informe suas preferências</h2><br />
                     <h6>*</h6>
                     <h5>Bebida escolhida</h5>
@@ -138,7 +145,7 @@ $batata = "Batata";
                             <span></span>
                         </label>
                         <label class="radio">
-                            <input type="radio" value="nao" name="choice">
+                            <input type="radio" value="nao" name="choice" checked>
                             Não
                             <span></span>
                         </label>
@@ -146,7 +153,7 @@ $batata = "Batata";
 
                     <div class="buttons">
                         <button type="button">Limpar</button>
-                        <button type="button">Cadastrar</button>
+                        <button type="submit" name="cadastrar" id="cadastrar">Cadastrar</button>
                     </div>
                 </form>
             </div>
@@ -154,27 +161,18 @@ $batata = "Batata";
             <div class="container3">
                 <h2>Seu cadastro</h2></br>
                 <i class="fa fa-filter fa-1x list" aria-hidden="true"></i>
-                <table class="content-table">
-                    <thead>
-                        <tr>
-                            <th>Bebida</th>
-                            <th>Interesse por acessórios</th>
-                            <th>Ano</th>
-                            <th>Preço</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <? foreach ($$_COOKIE["listaTabela"] as $row) : ?>
-                            <tr>
-                                <td><? echo $row["tipo"]; ?></td>
-                                <td><? echo $row[0]; ?></td>
-                                <td><? echo $row[1]; ?></td>
-                                <td><? echo $row[2]; ?></td>
-                                <td><? echo $row[3]; ?></td>
-                            </tr>
-                        <? endforeach; ?>
-                    </tbody>
-                </table>
+                <?php
+                echo '<table class="content-table">';
+                echo '<tr><th>Bebida</th><th>Interesse por acessórios</th><th>Ano</th><th>Preço</th></tr>';
+                foreach ($_COOKIE["listaTabela"] as $tabela) {
+                    echo '<tr>';
+                    foreach ($tabela as $key) {
+                        echo '<td>' . $key . '</td>';
+                    }
+                    echo '</tr>';
+                }
+                echo '</table>';
+                ?>
                 <div class="pagination">
                     <a>1</a>
                     <a>-</a>
@@ -182,7 +180,6 @@ $batata = "Batata";
                 </div>
             </div>
 
-        </container>
 
     </nav>
 

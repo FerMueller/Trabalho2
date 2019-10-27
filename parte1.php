@@ -30,11 +30,11 @@ session_start();
             <form action="login.php" method= "Post">
                 <div class="form-input">
                   <i class="fa fa-user fa-2x cust" aria-hidden="true"></i>
-                  <input type="text" name="email" value="<?php echo $_COOKIE["login"]; ?>" placeholder="   Usuário"><br />
+                  <input type="text" name="email" value="<?php if(isset($_COOKIE["login"])){echo $_COOKIE["login"];} else {echo "";} ?>" placeholder="   Usuário"><br />
                   <i class="fa fa-lock fa-2x cust" aria-hidden="true"></i>
-                  <input type="password" name="password" value="<?php echo $_COOKIE["senha"]; ?>" placeholder="   Senha"><br />
+                  <input type="password" name="password" value="<?php if(isset($_COOKIE["senha"])){echo $_COOKIE["senha"];} else {echo "";} ?>" placeholder="   Senha"><br />
                   <div class="checkbox">
-                      <input type="checkbox" id="check" name="check" <?php echo $_COOKIE["manterLogado"]; ?>>
+                      <input type="checkbox" id="check" name="check" <?php if(isset($_COOKIE["manterLogado"])){echo $_COOKIE["manterLogado"];}?>>
                       <label for="check"></label>
                       <a>Lembrar acesso</a><br /><br />
                   </div>

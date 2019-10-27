@@ -16,10 +16,15 @@ if (empty($login) || empty($senha)) {
         if ($login != "batata" || $senha1 != "batata") {
             die();
         } else {
+
             if (isset($manterLogado)) {
                 setcookie("login", $login);
                 setcookie("senha", $senha1);
                 setcookie("manterLogado", "checked");
+            } else {
+                setcookie("login", "");
+                setcookie("senha", "");
+                setcookie("manterLogado", "");
             }
             $_SESSION["login"] = $login;
             $_SESSION["senha"] = $senha1;
