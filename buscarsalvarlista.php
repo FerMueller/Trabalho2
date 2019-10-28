@@ -14,10 +14,12 @@ if (isset($cadastrar) && isset($_SESSION["login"]) || isset($bebida) || isset($a
     $array2 = array("tipo" => "Vinho", "Interrese" => "Sim", "Ano" => "2018 - 2017", "Valor" => "R$170 - R$220");
 
 
-    $tabela = array_push($array1);
-    $tabela = array_push($array2);
-    $tabela = array_push($newArray);
+    $tabela[] = $array1;
+    $tabela[] = $array2;
+    $tabela[] = $newArray ;
 
-    setcookie("listaTabela", $newArray);
-    var_dump($_COOKIE["listaTabela"]);
+    $tabela1 = json_encode($tabela); 
+    
+    setcookie("listaTabela", $tabela1);
+    header("Location: parte2.php");
 }

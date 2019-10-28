@@ -33,7 +33,7 @@ $vinhos = array(
 
 $array1 = array("tipo" => "Vinho", "Interrese" => "Sim", "Ano" => "2018 - 2017", "Valor" => "R$170 - R$220");
 $array2 = array("tipo" => "Espumantte", "Interrese" => "Não", "Ano" => "2017 - 2015", "Valor" => "R$195+");
-$tabela = [$array1, $array2];
+//$tabela = [$array1, $array2];
 //$tabela = array_push($array1);
 //$tabela = array_push($array2);
 
@@ -164,7 +164,15 @@ $batata = "Batata";
                 <?php
                 echo '<table class="content-table">';
                 echo '<tr><th>Bebida</th><th>Interesse por acessórios</th><th>Ano</th><th>Preço</th></tr>';
-                foreach ($_COOKIE["listaTabela"] as $tabela) {
+                
+                if (get_magic_quotes_gpc()) {
+                    $dadosTabela = stripslashes($_COOKIE["listaTabela"]);
+                } else {
+                    $dadosTabela = $_COOKIE["listaTabela"];
+                }
+                $dadosTabela = json_decode($dadosTabela, true);
+                 
+                foreach ($dadosTabela as $tabela) {
                     echo '<tr>';
                     foreach ($tabela as $key) {
                         echo '<td>' . $key . '</td>';
