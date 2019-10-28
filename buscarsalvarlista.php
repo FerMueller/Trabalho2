@@ -7,19 +7,35 @@ $ano  = $_POST["sl-2"];
 $valor = $_POST["sl-3"];
 $interesse = $_POST["choice"];
 $cadastrar = $_POST["cadastrar"];
+$timeOut = 5;
 
-if (isset($cadastrar) && isset($_SESSION["login"]) || isset($bebida) || isset($ano) || isset($valor) || isset($interesse)) {
-    $newArray = array("tipo" => $bebida, "Interrese" => $interesse, "Ano" => $ano, "Valor" => $valor);
-    $array1 = array("tipo" => "Espumante", "Interrese" => "Sim", "Ano" => "2018 - 2017", "Valor" => "R$170 - R$220");
-    $array2 = array("tipo" => "Vinho", "Interrese" => "Sim", "Ano" => "2018 - 2017", "Valor" => "R$170 - R$220");
+if (isset($_SESSION['last_action'])) {
+    $secondsInativo = time() - $_SESSION['last_action'];
+    $timeOutSeconds = $timeOut * 60;
+    if ($secondsInativo >= $timeOutSeconds) {
+        session_unset();
+        session_destroy();
+        header("Location: parte1.php");
+    }
+}
 
+if (isset($_SESSION["login"])) {
+    if (isset($cadastrar) && (isset($bebida) || isset($ano) || isset($valor) || isset($interesse))) {
 
-    $tabela[] = $array1;
-    $tabela[] = $array2;
-    $tabela[] = $newArray ;
+        if (isset($_COOKIE["listaTabela"])) {
+            if (get_magic_quotes_gpc()) {
+                $dadosTabela = stripslashes($_COOKIE["listaTabela"]);
+            } else {
+                $dadosTabela = $_COOKIE["listaTabela"];
+            }
+            $dadosTabela = json_decode($dadosTabela, true);
+        }
+        $dadosTabela[] = array("tipo" => $bebida, "Interrese" => $interesse, "Ano" => $ano, "Valor" => $valor);
+        $tabela1 = json_encode($dadosTabela);
 
-    $tabela1 = json_encode($tabela); 
-    
-    setcookie("listaTabela", $tabela1);
-    header("Location: parte2.php");
+        setcookie("listaTabela", $tabela1);
+        header("Location: parte2.php");
+    }
+} else {
+    header("Location: parte1.php");
 }

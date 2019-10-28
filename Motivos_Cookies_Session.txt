@@ -1,0 +1,7 @@
+Na questão da session era preciso pois era preciso gravar as informações do usuario toda vez que era 
+feito o login para validar nas demais paginas. 
+E também era preciso para dar timeout quando o tempo definido de session fosse alcançado.
+
+Os Cookies foram preciso para fazer a parte de usuario e senha e também de lembrar acesso quando o 
+usuario definisse que era necessario. Nesse caso especifico que não tinhamos a utilização de um banco
+utilizamos também os cookies para questão de salvar valores do form e incluir eles na tabela.

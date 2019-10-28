@@ -14,7 +14,7 @@ if (empty($login) || empty($senha)) {
 } else {
     if (isset($entrar)) {
         if ($login != "batata" || $senha1 != "batata") {
-            die();
+            header("Location: parte1.php");
         } else {
 
             if (isset($manterLogado)) {
@@ -32,6 +32,6 @@ if (empty($login) || empty($senha)) {
             $_SESSION['last_action'] = time();
         }
     } else {
-        http_response_code(404);
+        header("Location: parte1.php");
     }
 }
